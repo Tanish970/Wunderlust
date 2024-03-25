@@ -1,22 +1,18 @@
 const mongoose = require('mongoose');
-const schema=mongoose.Schema;
 
 const listingSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true,
-    },
-    description: String,
-    image: {
-        type: String,
-        default: "https://unsplash.com/photos/brown-and-black-wooden-house-TiVPTYCG_3E",
-        set: (v) => v === "" ? "https://unsplash.com/photos/brown-and-black-wooden-house-TiVPTYCG_3E" : v,
-    },
-    price: Number,
-    location: String,
-    country: String
+  title: String,
+  description: String,
+  image: {
+    filename: String,
+    url: String
+  },
+  price: Number,
+  location: String,
+  country: String,
+  // Add any other fields as necessary
 });
 
+const Listing = mongoose.model('Listing', listingSchema);
 
-const Listing=mongoose.model("listing",listingSchema);
-module.exports=Listing;
+module.exports = Listing;

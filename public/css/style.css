@@ -9,3 +9,55 @@
 .nav-link{
     color: #222222 !important;
 }
+
+/*Footer*/
+
+.f-info {
+    background-color: #ebebeb;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    text-align: center;
+    color: #333;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+}
+
+.f-info-socials {
+    margin-bottom: 20px;
+}
+
+.f-info-socials i {
+    font-size: 20px;
+    margin: 0 10px;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.f-info-socials i:hover {
+    color: #007bff; /* Change hover color as needed */
+}
+
+.f-info-links a {
+    color: #333;
+    text-decoration: none;
+    margin: 0 15px;
+    transition: color 0.3s ease;
+}
+
+.f-info-links a:hover {
+    color: #007bff; /* Change hover color as needed */
+}
+
+/* Additional styling for the copyright text to differentiate it from links */
+div > div:not(.f-info-socials):not(.f-info-links) {
+    margin-bottom: 20px;
+}
+.f-info-links a {
+    color: #000; /* Black color */
+    text-decoration: none; /* Removes underline */
+    margin: 0 15px;
+    transition: color 0.3s ease;
+}
+
+.f-info-links a:hover {
+    text-decoration: underline; /* Shows underline on hover */
+}

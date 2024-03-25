@@ -1,18 +1,16 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
-const Listing=require('../MONGO3/Models/listings.js')
+const Listing = require('../MONGO3/Models/listings.js'); // Adjust path as needed
 const app = express();
-const port = 8081;
-const methodOverride = require('method-override')
-const engine = require('ejs-mate')
+const port = 8080;
+const methodOverride = require('method-override');
+const engine = require('ejs-mate');
 
-
-mongoose.connect('mongodb://127.0.0.1:27017/wanderlust')
-  .then(() => console.log('Connected to MongoDB!'))
-  .catch(err => console.error('Could not connect to MongoDB.', err));
-
-
+// Replace with your MongoDB Atlas connection string
+mongoose.connect('mongodb+srv://rohithguntur:test123@cluster0.3xgqumk.mongodb.net/wanderlust?retryWrites=true&w=majority&appName=Cluster0')
+  .then(() => console.log('Connected to MongoDB Atlas and using the wanderlust database!'))
+  .catch(err => console.error('Could not connect to MongoDB Atlas.', err));
 
 
 // Set views and view engine
