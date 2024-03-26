@@ -4,13 +4,29 @@
    <form  method="GET" action="/listings/new">
     <button>Create New Listing</button>
    </form>
-   
-   <ul>
-    <%for(listing of allListing){%>
-    <li><a href="/listings/<%=listing._id%>"><%=listing.title%></a></li>
-    
-<%}%>
-</ul>
+   <div class="container">
+    <div class="row">
+        <% for(listing of allListing) { %>
+            <div class="col-md-4 mb-4">
+                <a href="listings/<%= listing._id %>" class="listing_link">
+                    <div class="card">
+                        <div class="card-overlay"></div>
+                        <img src="<%= listing.image.url %>" class="card-img-top" alt="Listing image">
+                        <div class="card-body">
+                            <p class="card-text">
+                                <%= listing.title %><br/>
+                                &#x20B9;<%= listing.price.toLocaleString("en-IN") %>
+                            </p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+
 </body>
 
 

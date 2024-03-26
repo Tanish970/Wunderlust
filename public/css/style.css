@@ -61,3 +61,57 @@ div > div:not(.f-info-socials):not(.f-info-links) {
 .f-info-links a:hover {
     text-decoration: underline; /* Shows underline on hover */
 }
+
+
+.card-img-top {
+    height: 200px !important;
+    object-fit: cover !important;
+    object-position: center !important;
+  }
+  
+
+.card {
+    height: 100%; /* Make card heights equal within the same row */
+    display: flex; /* Enables flexible layouts */
+    flex-direction: column; /* Stack card content vertically */
+    border: 2px solid black; /* Adds a black border around the card */
+    position: relative; /* Required for the overlay to position correctly */
+    transition: 0.3s; /* Smooth transition for any changes */
+  }
+  
+.card-body {
+    flex-grow: 1; /* Allows the card body to expand to fill available space */
+    display: flex; /* Enables flexible layouts */
+    flex-direction: column; /* Stack card body content vertically */
+    justify-content: space-between; /* Distributes space between and around content items */
+  }
+  
+.listing_link{
+    text-decoration: none;
+}
+
+  
+.card {
+    height: 100%; /* Make card heights equal within the same row */
+    display: flex; /* Enables flexible layouts */
+    flex-direction: column; /* Stack card content vertically */
+    border: 2px solid black; /* Adds a black border around the card */
+    position: relative; /* Required for absolute positioning of children */
+    transition: transform 0.3s ease; /* Smooth transition for transform */
+    overflow: hidden; /* Ensures that the scaled card does not overflow its container */
+}
+
+.card-body {
+    flex-grow: 1; /* Allows the card body to expand to fill available space */
+    display: flex; /* Enables flexible layouts */
+    flex-direction: column; /* Stack card body content vertically */
+    justify-content: space-between; /* Distributes space between and around content items */
+}
+
+.listing_link {
+    text-decoration: none;
+}
+
+.card:hover {
+    transform: scale(1.05); /* Scales up the card a little bit on hover */
+}
