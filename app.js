@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
-const Listing = require('../MONGO3/Models/listings.js'); // Adjust path as needed
+const Listing = require('/workspaces/Wunderlust/Models/listings.js'); // Adjust path as needed
 const app = express();
 const exec = require('child_process').exec;
 

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const initData = require('./data.js');
-const Listing = require('../Models/listings.js'); // Assuming this is the correct path
+const Listing = require('/workspaces/Wunderlust/Models/listings.js'); // Assuming this is the correct path
 
 const initDb = async () => {
   await Listing.deleteMany({}); // Clears the existing listings

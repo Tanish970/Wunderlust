@@ -33,7 +33,7 @@
 }
 
 .f-info-socials i:hover {
-    color: #007bff; /* Change hover color as needed */
+    color: #fe424d; /* Change hover color as needed */
 }
 
 .f-info-links a {
@@ -44,7 +44,7 @@
 }
 
 .f-info-links a:hover {
-    color: #007bff; /* Change hover color as needed */
+    color: #fe424d; /* Change hover color as needed */
 }
 
 /* Additional styling for the copyright text to differentiate it from links */
@@ -60,11 +60,13 @@ div > div:not(.f-info-socials):not(.f-info-links) {
 
 .f-info-links a:hover {
     text-decoration: underline; /* Shows underline on hover */
+    color: #fe424d;
 }
 
 
 .card-img-top {
-    height: 200px !important;
+    min-height: 150px; 
+    height: 250px !important;
     object-fit: cover !important;
     object-position: center !important;
   }
@@ -114,4 +116,16 @@ div > div:not(.f-info-socials):not(.f-info-links) {
 
 .card:hover {
     transform: scale(1.05); /* Scales up the card a little bit on hover */
+}
+.add-btn{
+    background-color: hsl(356, 99%, 63%) !important;
+    border-color: hsl(356, 99%, 63%) !important;
+}
+.edit-btn{
+    background-color: hsl(356, 99%, 63%) !important;
+    border-color: hsl(356, 99%, 63%) !important;
+}
+.new-listing-btn{
+    background-color: hsl(356, 99%, 63%) !important;
+    border-color: hsl(356, 99%, 63%) !important;
 }
