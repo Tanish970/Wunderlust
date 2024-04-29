@@ -30,13 +30,19 @@ app.engine('ejs', engine);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(flash());
 
+
+
+
+
+
+
 // Set up session
 app.use(session({
   secret: secretKey,
   resave: false,
   saveUninitialized: true
 }));
-
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -49,6 +55,11 @@ app.get("/listings",async (req,res)=>{
     res.render('../views/listings/index.ejs', { allListing });
         
 })
+
+app.get("/testflash", (req, res) => {
+  req.flash("success", "Testing");
+  res.redirect("/listings");
+});
 app.get("/signup", (req, res) => {
   res.render('../views/users/signup.ejs');
 });
@@ -65,6 +76,39 @@ app.post("/signup", async (req, res) => {
     req.flash("error", e.message);
     res.redirect("/signup");
   }
+});
+
+app.post("/signin", async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) {
+      req.flash("error", "Invalid email or password");
+      return res.redirect("/signin");
+    }
+
+    const isValidPassword = await user.validatePassword(password);
+    if (!isValidPassword) {
+      req.flash("error", "Invalid email or password");
+      return res.redirect("/signin");
+    }
+
+    req.login(user, (err) => {
+      if (err) {
+        req.flash("error", err.message);
+        return res.redirect("/signin");
+      }
+      req.flash("success", `Welcome back, ${user.username}!`);
+      res.redirect("/listings");
+    });
+  } catch (err) {
+    req.flash("error", err.message);
+    res.redirect("/signin");
+  }
+});
+
+app.get("/signin", (req, res) => {
+  res.render('../views/users/signin.ejs');
 });
 
 app.get("/demouser", async(req,res)=>{
