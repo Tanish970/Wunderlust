@@ -30,19 +30,11 @@ app.engine('ejs', engine);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(flash());
 
-
-
-
-
-
-
-// Set up session
 app.use(session({
   secret: secretKey,
   resave: false,
   saveUninitialized: true
 }));
-app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -50,16 +42,21 @@ passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.falure = req.flash("failure")
+  console.log(res.locals.success);
+  next();
+});
+
 app.get("/listings",async (req,res)=>{
     const allListing=await Listing.find({});
     res.render('../views/listings/index.ejs', { allListing });
         
 })
 
-app.get("/testflash", (req, res) => {
-  req.flash("success", "Testing");
-  res.redirect("/listings");
-});
+
 app.get("/signup", (req, res) => {
   res.render('../views/users/signup.ejs');
 });
@@ -73,38 +70,30 @@ app.post("/signup", async (req, res) => {
     req.flash("success", "Welcome to Wanderlust");
     res.redirect("/listings");
   } catch (e) {
+    console.log("error")
     req.flash("error", e.message);
+    res.locals.failure=flash("failure","Invalid Credentials")
     res.redirect("/signup");
   }
 });
 
-app.post("/signin", async (req, res, next) => {
-  try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
+app.post("/signin", (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
     if (!user) {
-      req.flash("error", "Invalid email or password");
-      return res.redirect("/signin");
+      req.flash("failure", "Invalid username or password");
+      return res.redirect('/signin');
     }
-
-    const isValidPassword = await user.validatePassword(password);
-    if (!isValidPassword) {
-      req.flash("error", "Invalid email or password");
-      return res.redirect("/signin");
-    }
-
-    req.login(user, (err) => {
+    req.logIn(user, (err) => {
       if (err) {
-        req.flash("error", err.message);
-        return res.redirect("/signin");
+        return next(err);
       }
-      req.flash("success", `Welcome back, ${user.username}!`);
-      res.redirect("/listings");
+      res.send("Welcome to Wonder Lust");
+      res.locals.success = req.flash("success");
     });
-  } catch (err) {
-    req.flash("error", err.message);
-    res.redirect("/signin");
-  }
+  })(req, res, next);
 });
 
 app.get("/signin", (req, res) => {
@@ -122,7 +111,6 @@ app.get("/demouser", async(req,res)=>{
 
 
 app.get("/listings/new",(req,res)=>{
-  console.log("HII")
   res.render("../views/listings/new.ejs")
 })
 
