@@ -45,11 +45,16 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
-  res.locals.falure = req.flash("failure")
-  console.log(res.locals.success);
+  res.locals.failure = req.flash("failure")
   next();
 });
 
+
+app.get("/test",(req,res)=>{
+  req.flash("failure","Testing Success")
+  
+  res.redirect("/listings")
+})
 app.get("/listings",async (req,res)=>{
     const allListing=await Listing.find({});
     res.render('../views/listings/index.ejs', { allListing });
@@ -90,8 +95,8 @@ app.post("/signin", (req, res, next) => {
       if (err) {
         return next(err);
       }
-      res.send("Welcome to Wonder Lust");
-      res.locals.success = req.flash("success");
+      req.flash("success", "Loggedin");
+      return res.redirect('/listings');
     });
   })(req, res, next);
 });
@@ -111,6 +116,10 @@ app.get("/demouser", async(req,res)=>{
 
 
 app.get("/listings/new",(req,res)=>{
+  if (!req.isAuthenticated()){
+    req.flash("failure","You must be signed to create a listing")
+    return res.redirect("/signin")
+  }
   res.render("../views/listings/new.ejs")
 })
 
