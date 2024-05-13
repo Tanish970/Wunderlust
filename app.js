@@ -52,7 +52,9 @@ app.use((req, res, next) => {
   next();
 });
 
-
+app.get('/', (req, res) => {
+  res.redirect("/listings")
+});
 app.get("/test",(req,res)=>{
   req.flash("failure","Testing Success")
   
