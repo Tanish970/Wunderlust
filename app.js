@@ -32,6 +32,7 @@ app.engine('ejs', engine);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(flash());
 
+
 app.use(session({
   secret: secretKey,
   resave: false,
