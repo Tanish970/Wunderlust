@@ -1,8 +1,8 @@
 [build]
 command = "npm install"
-functions = "functions"
+publish = "public"
 
 [[redirects]]
 from = "/*"
-to = "/.netlify/functions/app"
+to = "/app.js"
 status = 200
