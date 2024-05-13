@@ -1,8 +1,8 @@
 [build]
-command = "npm install"
-publish = "."
+  command = "npm install"
+  publish = "."
 
 [[redirects]]
-from = "/*"
-to = "/app.js"
-status = 200
+  from = "/*"
+  to = "/app.js"
+  status = 200
