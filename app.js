@@ -13,7 +13,9 @@ const session = require('express-session');
 const User = require('./Models/user.js');
 const flash = require('connect-flash');
 
+
 const crypto = require('crypto');
+const { isLoggedin } = require('./middleware.js');
 const secretKey = crypto.randomBytes(32).toString('hex');
 
 // Replace with your MongoDB Atlas connection string
@@ -115,11 +117,8 @@ app.get("/demouser", async(req,res)=>{
 })
 
 
-app.get("/listings/new",(req,res)=>{
-  if (!req.isAuthenticated()){
-    req.flash("failure","You must be signed to create a listing")
-    return res.redirect("/signin")
-  }
+app.get("/listings/new",isLoggedin,(req,res)=>{
+  console.log("J")
   res.render("../views/listings/new.ejs")
 })
 
@@ -132,14 +131,14 @@ app.post("/listings",async (req,res)=>{
 
 })
 
-app.get("/listings/:id",async (req,res)=>{
+app.get("/listings/:id",isLoggedin,async (req,res)=>{
   const {id}=req.params;
   const listing=await Listing.findById(id);
   console.log(listing)
   res.render("../views/listings/show.ejs",{listing});
 })
 
-app.get("/listings/:id/edit",async(req,res)=>{
+app.get("/listings/:id/edit",isLoggedin,async(req,res)=>{
   const {id}=req.params;
   const listing=await Listing.findById(id);
   console.log("Not Working")

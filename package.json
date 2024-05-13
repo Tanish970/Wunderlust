@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm run compile-ejs && npm run copy-files",
+    "compile-ejs": "ejs-cli --base-dir ./views --out ./build",
+    "copy-files": "cp -r ./public ./build"
+    },
   "author": "",
   "license": "ISC",
   "dependencies": {
