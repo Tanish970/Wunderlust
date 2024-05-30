@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
@@ -12,6 +13,7 @@ const engine = require('ejs-mate');
 const session = require('express-session');
 const User = require('./Models/user.js');
 const flash = require('connect-flash');
+const cluster_address=process.env.CLUSTER_ADDRESS
 
 
 const crypto = require('crypto');
@@ -19,7 +21,7 @@ const { isLoggedin } = require('./middleware.js');
 const secretKey = crypto.randomBytes(32).toString('hex');
 
 // Replace with your MongoDB Atlas connection string
-mongoose.connect('mongodb+srv://rohithguntur:test123@cluster0.3xgqumk.mongodb.net/wanderlust?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect(cluster_address)
   .then(() => console.log('Connected to MongoDB Atlas and using the wanderlust database!'))
   .catch(err => console.error('Could not connect to MongoDB Atlas.', err));
 
@@ -87,6 +89,9 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+
+
+
 app.post("/signin", (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     if (err) {
@@ -106,9 +111,20 @@ app.post("/signin", (req, res, next) => {
   })(req, res, next);
 });
 
+app.post("/logout",(req,res)=>{
+  if (err) {
+    return next(err);
+  }
+  req.flash("success", "Loggedout");
+  req.logOut;
+  res.redirect("/listings")
+})
+
 app.get("/signin", (req, res) => {
   res.render('../views/users/signin.ejs');
 });
+
+
 
 app.get("/demouser", async(req,res)=>{
   const fakeUser = new User({
@@ -121,7 +137,6 @@ app.get("/demouser", async(req,res)=>{
 
 
 app.get("/listings/new",isLoggedin,(req,res)=>{
-  console.log("J")
   res.render("../views/listings/new.ejs")
 })
 
